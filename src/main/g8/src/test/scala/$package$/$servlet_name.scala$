@@ -1,0 +1,12 @@
+package $package$
+
+import org.scalatest.FlatSpec
+import org.scalatest.matchers.ShouldMatchers
+
+class $servlet_name$Test extends FlatSpec with ShouldMatchers {
+
+    "$servlet_name$" shoud "pass test" in {
+        1 should be (1)
+    }
+
+}

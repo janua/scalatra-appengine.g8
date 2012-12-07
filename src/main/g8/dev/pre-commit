@@ -1,0 +1,23 @@
+#!/bin/sh
+
+WEB_XMLS=$(git diff --cached --name-status | grep 'appengine-web.xml' | awk '{ print $2 }')
+
+for XML in $WEB_XMLS; do
+   if [ -z "$(grep '^ *<application>changeme</application>$' $XML)" ]; then
+      echo "Error: Attempt to commit an appengine-web.xml with non-fake application id."
+      echo
+      echo "Checking in real application ids is dangerous. Revert the application id"
+      echo "change in <root>$(echo $XML | sed 's|^\.||')"
+      echo
+      exit 1
+   fi
+
+   if [ -z "$(grep '^ *<version>changeme</version>$' $XML)" ]; then
+      echo "Error: Attempt to commit an appengine-web.xml with non-fake version."
+      echo
+      echo "Checking in real version ids is dangerous. Revert the version id"
+      echo "change in <root>$(echo $XML | sed 's|^\.||')"
+      echo
+      exit 1
+   fi
+done
